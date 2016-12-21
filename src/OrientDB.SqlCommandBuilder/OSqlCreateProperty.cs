@@ -1,8 +1,6 @@
-﻿using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+﻿using OrientDB.SqlCommandBuilder.Protocol;
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlCreateProperty
     {
@@ -23,22 +21,6 @@ namespace Orient.Client
             _type = type;
             _sqlQuery.Property(_propertyName, _type);
             return this;
-        }
-        public short Run()
-        {
-            if (string.IsNullOrEmpty(_class))
-                throw new OException(OExceptionType.Query, "Class is empty");
-
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return short.Parse(result.ToDocument().GetField<string>("Content"));
         }
 
         public override string ToString()

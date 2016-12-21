@@ -1,42 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
-using Orient.Client.Protocol.Serializers;
+﻿using System.Collections.Generic;
 
 namespace OrientDB.SqlCommandBuilder
 {
     public class OCommandQuery
     {
-        private Connection _connection;
         private CommandPayloadBase _payload;
         private Dictionary<string, object> _simpleParams;
 
-        internal OCommandQuery(Connection connection, CommandPayloadBase payload)
+        internal OCommandQuery(CommandPayloadBase payload)
         {
-            _connection = connection;
             _payload = payload;
-        }
-
-        public OCommandResult Run()
-        {
-            if (_simpleParams != null)
-            {
-                var paramsDocument = new ODocument();
-                paramsDocument.OClassName = "";
-                paramsDocument.SetField(OClient.ProtocolVersion < 22 ? "params" : "parameters", _simpleParams);
-                ((CommandPayloadCommand)_payload).SimpleParams = RecordSerializerFactory.GetSerializer(_connection.Database).Serialize(paramsDocument);
-            }
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = _payload;
-
-            ODocument document = _connection.ExecuteOperation(operation);
-            return new OCommandResult(document);
         }
 
         public OCommandQuery Set(string parameter, object value)

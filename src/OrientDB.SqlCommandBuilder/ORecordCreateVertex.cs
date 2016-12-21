@@ -1,28 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
 
 // syntax: 
 // CREATE VERTEX [<class>] 
 // [CLUSTER <cluster>] 
 // [SET <field> = <expression>[,]*]
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class ORecordCreateVertex : IOCreateVertex
     {
-        private Connection _connection;
         private ODocument _document;
 
         public ORecordCreateVertex()
         {
         }
 
-        internal ORecordCreateVertex(Connection connection)
+        internal ORecordCreateVertex()
         {
-            _connection = connection;
+            
         }
 
         #region Vertex
@@ -109,28 +106,6 @@ namespace Orient.Client
             return this;
         }
 
-        #endregion
-
-        #region Run
-
-        public OVertex Run()
-        {
-            //            var operation = CreateSQLOperation();
-
-            var operation = new RecordCreate(_document, _connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            return _connection.ExecuteOperation(operation).To<OVertex>();
-        }
-
-       
-
-        public T Run<T>() where T : class, new()
-        {
-            return Run().To<T>();
-        }
-
-        #endregion
-
-      
+        #endregion      
     }
 }

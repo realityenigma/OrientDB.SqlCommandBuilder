@@ -1,21 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+using OrientDB.SqlCommandBuilder.Protocol;
+using OrientDB.SqlCommandBuilder.Protocol.Operations;
+using OrientDB.SqlCommandBuilder.Protocol.Operations.Command;
 
 namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlSchema
     {
-        private Connection _connection;
         private string query = "select expand(classes) from metadata:schema";
         private IEnumerable<ODocument> _schema;
 
-        internal OSqlSchema(Connection connection)
+        internal OSqlSchema()
         {
-            _connection = connection;
-            _schema = Run();
+           
         }
 
         public IEnumerable<string> Classes()
@@ -69,23 +67,6 @@ namespace OrientDB.SqlCommandBuilder
         {
             var @class = typeof(T).Name;
             return GetClustersForClass(@class);
-        }
-
-        private IEnumerable<ODocument> Run()
-        {
-            CommandPayloadQuery payload = new CommandPayloadQuery();
-            payload.Text = query;
-            payload.NonTextLimit = -1;
-            payload.FetchPlan = "*:0";
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Asynchronous;
-            operation.CommandPayload = payload;
-
-            ODocument document = _connection.ExecuteOperation(operation);
-
-            return document.GetField<List<ODocument>>("Content");
-
         }
     }
 }

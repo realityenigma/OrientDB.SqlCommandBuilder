@@ -1,26 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
 
 namespace OrientDB.SqlCommandBuilder
 {
     public class ORecordCreateDocument : IOCreateDocument
     {
-        private Connection _connection;
-        private ODocument _document;
+        private IDictionary<string, object> _document;
 
         public ORecordCreateDocument()
         {
         }
 
-        internal ORecordCreateDocument(Connection connection)
+        internal ORecordCreateDocument()
         {
-            _connection = connection;
-            _document = new ODocument();
+            _document = new Dictionary<string, object>();
         }
 
         public IOCreateDocument Cluster(string clusterName)
@@ -46,28 +40,15 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateDocument Document<T>(T obj)
         {
-            if (obj is ODocument)
+            if (obj is IDictionary<string, object>)
             {
-                _document = obj as ODocument;
+                _document = obj as IDictionary<string, object>;
             }
             else
             {
-                _document = ODocument.ToDocument(obj);
+                _document = IDictionary<string, object>.ToDocument(obj);
             }
             return this;
-        }
-
-        public ODocument Run()
-        {
-            var operation = new RecordCreate(_document, _connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-
-            return _connection.ExecuteOperation(operation);
-        }
-
-        public T Run<T>() where T : class, new()
-        {
-            return Run().To<T>();
         }
 
         public IOCreateDocument Set<T>(string fieldName, T fieldValue)
@@ -79,13 +60,13 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateDocument Set<T>(T obj)
         {
-            if (obj is ODocument)
+            if (obj is IDictionary<string, object>)
             {
-                _document = obj as ODocument;
+                _document = obj as IDictionary<string, object>;
             }
             else
             {
-                _document = ODocument.ToDocument(obj);
+                _document = IDictionary<string, object>.ToDocument(obj);
             }
 
             return this;

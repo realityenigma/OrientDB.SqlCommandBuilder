@@ -1,9 +1,10 @@
-﻿using OrientDB.SqlCommandBuilder;
+﻿using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder;
 using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
+using OrientDB.SqlCommandBuilder.Protocol;
+using OrientDB.SqlCommandBuilder.Protocol.Operations;
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OCreate
     {
@@ -39,12 +40,12 @@ namespace Orient.Client
 
         #region Cluster
 
-        public IOCreateCluster Cluster(string clusterName, OClusterType clusterType)
+        public IOCreateCluster Cluster(string clusterName, ClusterType clusterType)
         {
             return new ODataClasterAdd(_connection).Cluster(clusterName, clusterType);
         }
 
-        public IOCreateCluster Cluster<T>(OClusterType clusterType)
+        public IOCreateCluster Cluster<T>(ClusterType clusterType)
         {
             return Cluster(typeof(T).Name, clusterType);
         }

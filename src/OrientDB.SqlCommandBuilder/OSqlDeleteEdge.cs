@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+using OrientDB.SqlCommandBuilder.Protocol;
+using OrientDB.SqlCommandBuilder.Protocol.Operations;
+using OrientDB.SqlCommandBuilder.Protocol.Operations.Command;
+using OrientDB.Core;
 
 // syntax:
 // DELETE EDGE <rid>|FROM <rid>|TO <rid>|<[<class>] 
 // [WHERE <conditions>]> 
 // [LIMIT <MaxRecords>]
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlDeleteEdge
     {
@@ -228,21 +229,7 @@ namespace Orient.Client
 
             return this;
         }
-
-        public int Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return int.Parse(result.ToDocument().GetField<string>("Content"));
-        }
-
+        
         public override string ToString()
         {
             return _sqlQuery.ToString(QueryType.DeleteEdge);

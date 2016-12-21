@@ -1,12 +1,9 @@
-﻿using OrientDB.SqlCommandBuilder;
-using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+﻿using OrientDB.SqlCommandBuilder.Interfaces;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // shorthand for INSERT INTO for documents
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlCreateDocument : IOCreateDocument
     {
@@ -78,29 +75,6 @@ namespace Orient.Client
             _sqlQuery.Set(obj);
 
             return this;
-        }
-
-        #endregion
-
-        #region Run
-
-        public ODocument Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return result.ToSingle();
-        }
-
-        public T Run<T>() where T : class, new()
-        {
-            return Run().To<T>();
         }
 
         #endregion

@@ -1,5 +1,4 @@
-﻿using System;
-namespace OrientDB.SqlCommandBuilder.Interfaces
+﻿namespace OrientDB.SqlCommandBuilder.Interfaces
 {
     public interface IOCreateDocument
     {
@@ -7,9 +6,7 @@ namespace OrientDB.SqlCommandBuilder.Interfaces
         IOCreateDocument Cluster<T>();
         IOCreateDocument Document(string className);
         IOCreateDocument Document<T>();
-        IOCreateDocument Document<T>(T obj);
-        Orient.Client.ODocument Run();
-        T Run<T>() where T : class, new();
+        IOCreateDocument Document<T>(T obj);        
         IOCreateDocument Set<T>(string fieldName, T fieldValue);
         IOCreateDocument Set<T>(T obj);
         string ToString();

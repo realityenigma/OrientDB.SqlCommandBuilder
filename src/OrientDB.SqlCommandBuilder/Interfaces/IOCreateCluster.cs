@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using OrientDB.Core.Models;
 
 namespace OrientDB.SqlCommandBuilder.Interfaces
 {
     public interface IOCreateCluster
     {
-        IOCreateCluster Cluster(string clusterName, OClusterType clusterType);
-        IOCreateCluster Cluster<T>(OClusterType clusterType);
-        short Run();
+        IOCreateCluster Cluster(string clusterName, ClusterType clusterType);
+        IOCreateCluster Cluster<T>(ClusterType clusterType);   
         string ToString();
     }
 }

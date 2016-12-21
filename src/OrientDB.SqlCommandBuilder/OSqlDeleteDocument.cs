@@ -1,6 +1,4 @@
-﻿using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+﻿using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax:
 // DELETE FROM <Class>|cluster:<cluster>|index:<index> 
@@ -8,7 +6,7 @@ using Orient.Client.Protocol.Operations.Command;
 // [BY <Fields>* [ASC|DESC](ORDER)*] 
 // [<MaxRecords>](LIMIT)
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlDeleteDocument
     {
@@ -180,19 +178,6 @@ namespace Orient.Client
             _sqlQuery.Limit(maxRecords);
 
             return this;
-        }
-
-        public int Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-            return int.Parse(result.ToDocument().GetField<string>("Content"));
         }
 
         public override string ToString()

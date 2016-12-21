@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Reflection;
-using Orient.Client.API.Types;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
 // CREATE CLASS <class> 
 // [EXTENDS <super-class>] 
 // [CLUSTER <clusterId>*]
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlCreateClass
     {

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-
-namespace OrientDB.SqlCommandBuilder
+﻿namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlDeleteCluster
     {
@@ -21,17 +14,6 @@ namespace OrientDB.SqlCommandBuilder
         {
             _connection = connection;
             _clusterid = clusterid;
-        }
-        public bool Run()
-        {
-            bool result = false;
-            var operation = new DataClusterDrop(_connection.Database);
-            operation.ClusterId = _clusterid;
-            var document = _connection.ExecuteOperation(operation);
-            result = document.GetField<bool>("remove_localy");
-            if (result)
-                _connection.Database.RemoveCluster(_clusterid);
-            return result;
         }
     }
 }

@@ -1,7 +1,8 @@
-﻿using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+﻿using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Interfaces;
+using OrientDB.SqlCommandBuilder.Protocol;
+using OrientDB.SqlCommandBuilder.Protocol.Operations;
+using OrientDB.SqlCommandBuilder.Protocol.Operations.Command;
 
 // syntax:
 // CREATE CLUSTER <name> <type> 
@@ -9,7 +10,7 @@ using Orient.Client.Protocol.Operations.Command;
 // [LOCATION <path>|default] 
 // [POSITION <position>|append]
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlCreateCluster : IOCreateCluster
     {
@@ -27,34 +28,21 @@ namespace Orient.Client
         }
 
         #region Cluster
-
-        public IOCreateCluster Cluster(string clusterName, OClusterType clusterType)
+    
+        public IOCreateCluster Cluster(string clusterName, ClusterType clusterType)
         {
             _sqlQuery.Cluster(clusterName, clusterType);
 
             return this;
         }
 
-        public IOCreateCluster Cluster<T>(OClusterType clusterType)
+        public IOCreateCluster Cluster<T>(ClusterType clusterType)
         {
             return Cluster(typeof(T).Name, clusterType);
         }
 
         #endregion
-
-        public short Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return short.Parse(result.ToDocument().GetField<string>("Content"));
-        }
+               
 
         public override string ToString()
         {

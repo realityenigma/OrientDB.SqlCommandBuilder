@@ -1,14 +1,12 @@
 ﻿using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax:
 // INSERT INTO <Class>|cluster:<cluster>|index:<index> 
 // [<cluster>](cluster) 
 // [VALUES (<expression>[,]((<field>[,]*))*)]|[<field> = <expression>[,](SET)*]
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlInsert : IOInsert
     {
@@ -99,30 +97,7 @@ namespace Orient.Client
             return this;
         }
 
-        #endregion
-
-        #region Run
-
-        public ODocument Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return result.ToSingle();
-        }
-
-        public T Run<T>() where T : class, new() 
-        {
-            return Run().To<T>();
-        }
-
-        #endregion
+        #endregion     
 
         public override string ToString()
         {

@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+﻿using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
 // UPDATE <class>|cluster:<cluster>> 
@@ -19,12 +16,11 @@ using Orient.Client.Protocol.Operations.Command;
 // [[<field-name> = <map-key> [,<map-value>]](PUT|REMOVE])[<field-name> = <map-key> [,<map-value>]](,)* 
 // [<conditions>](WHERE)
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlUpdate
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlUpdate()
         {
@@ -32,7 +28,6 @@ namespace Orient.Client
         }
         internal OSqlUpdate(Connection connection)
         {
-            _connection = connection;
             _sqlQuery = new SqlQuery(connection);
         }
 
@@ -258,19 +253,7 @@ namespace Orient.Client
 
         #endregion
 
-        public int Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return int.Parse(result.ToDocument().GetField<string>("Content"));
-        }
+      
 
         public override string ToString()
         {

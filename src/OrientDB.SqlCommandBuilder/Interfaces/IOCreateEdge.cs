@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using OrientDB.Core;
 
 namespace OrientDB.SqlCommandBuilder.Interfaces
 {
@@ -17,9 +14,7 @@ namespace OrientDB.SqlCommandBuilder.Interfaces
         IOCreateEdge To(ORID orid);
         IOCreateEdge To<T>(T obj);
         IOCreateEdge Set<T>(string fieldName, T fieldValue);
-        IOCreateEdge Set<T>(T obj);
-        OEdge Run();
-        T Run<T>() where T : class, new();
+        IOCreateEdge Set<T>(T obj);        
         string ToString();
     }
 }

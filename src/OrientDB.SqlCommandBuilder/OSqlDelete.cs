@@ -1,8 +1,4 @@
-﻿using OrientDB.SqlCommandBuilder;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-
-namespace Orient.Client
+﻿namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlDelete
     {

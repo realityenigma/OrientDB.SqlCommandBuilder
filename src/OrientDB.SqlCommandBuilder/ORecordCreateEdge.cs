@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
+using OrientDB.Core;
 
 namespace OrientDB.SqlCommandBuilder
 {
     class ORecordCreateEdge : IOCreateEdge
     {
-        private Connection _connection;
-        private ODocument _document;
+        private IDictionary<string, object> _document;
         private ORID _source;
         private ORID _dest;
         private string _edgeName;
@@ -20,9 +16,8 @@ namespace OrientDB.SqlCommandBuilder
         {
         }
 
-        internal ORecordCreateEdge(Connection connection)
+        internal ORecordCreateEdge()
         {
-            _connection = connection;
         }
 
         #region Edge
@@ -110,31 +105,6 @@ namespace OrientDB.SqlCommandBuilder
 
         #endregion
 
-
-
-        public OEdge Run()
-        {
-            if (_document == null)
-            {
-                // simple link, no properties?
-            }
-            else
-            {
-
-            }
-
-            //            var operation = CreateSQLOperation();
-
-            var operation = new RecordCreate(_document, _connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            return _connection.ExecuteOperation(operation).To<OEdge>();
-        }
-        
-        public T Run<T>() where T : class, new()
-        {
-            return Run().To<T>();
-        }
-
         public IOCreateEdge From(ORID orid)
         {
             _source = orid;
@@ -160,13 +130,13 @@ namespace OrientDB.SqlCommandBuilder
             return this;
         }
 
-        private static ODocument ToODocument<T>(T obj)
+        private static IDictionary<string, object> ToODocument<T>(T obj)
         {
-            ODocument document;
+            IDictionary<string, object> document;
 
-            if (obj is ODocument)
+            if (obj is IDictionary<string, object>)
             {
-                document = obj as ODocument;
+                document = obj as IDictionary<string, object>;
             }
             else
             {

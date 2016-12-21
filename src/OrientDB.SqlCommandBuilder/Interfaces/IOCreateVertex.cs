@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace OrientDB.SqlCommandBuilder.Interfaces
+﻿namespace OrientDB.SqlCommandBuilder.Interfaces
 {
     public interface IOCreateVertex
     {
@@ -13,9 +8,7 @@ namespace OrientDB.SqlCommandBuilder.Interfaces
         IOCreateVertex Cluster(string clusterName);
         IOCreateVertex Cluster<T>();
         IOCreateVertex Set<T>(string fieldName, T fieldValue);
-        IOCreateVertex Set<T>(T obj);
-        OVertex Run();
-        T Run<T>() where T : class, new();
+        IOCreateVertex Set<T>(T obj);      
         string ToString();
     }
 }

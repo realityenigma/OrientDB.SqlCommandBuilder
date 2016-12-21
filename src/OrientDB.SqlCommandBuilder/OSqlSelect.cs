@@ -1,9 +1,5 @@
 using System.Collections.Generic;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
-using Orient.Client.API.Attributes;
-using System;
+using OrientDB.SqlCommandBuilder.Protocol;
 using System.Reflection;
 
 // syntax:
@@ -15,12 +11,11 @@ using System.Reflection;
 // [<SkipRecords>](SKIP) 
 // [<MaxRecords>](LIMIT)
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlSelect
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlSelect()
         {
@@ -28,7 +23,6 @@ namespace Orient.Client
         }
         internal OSqlSelect(Connection connection)
         {
-            _connection = connection;
             _sqlQuery = new SqlQuery(connection);
         }
 
@@ -288,46 +282,7 @@ namespace Orient.Client
             _sqlQuery.Limit(maxRecords);
 
             return this;
-        }
-
-        #region ToList
-
-        public List<T> ToList<T>() where T : class, new()
-        {
-            List<T> result = new List<T>();
-            List<ODocument> documents = ToList("*:0");
-
-            foreach (ODocument document in documents)
-            {
-                result.Add(document.To<T>());
-            }
-
-            return result;
-        }
-
-        public List<ODocument> ToList()
-        {
-            return ToList("*:0");
-        }
-
-        public List<ODocument> ToList(string fetchPlan)
-        {
-            CommandPayloadQuery payload = new CommandPayloadQuery();
-            payload.Text = ToString();
-            payload.NonTextLimit = -1;
-            payload.FetchPlan = fetchPlan;
-            //payload.SerializedParams = new byte[] { 0 };
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Asynchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult commandResult = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return commandResult.ToList();
-        }
-
-        #endregion
+        }      
 
         public override string ToString()
         {

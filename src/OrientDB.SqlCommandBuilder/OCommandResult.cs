@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Orient.Client.Protocol;
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OCommandResult
     {

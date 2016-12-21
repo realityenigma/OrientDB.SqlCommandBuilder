@@ -9,9 +9,7 @@ namespace OrientDB.SqlCommandBuilder.Interfaces
         IOInsert Insert<T>();
         IOInsert Insert<T>(T obj);
         IOInsert Into(string className);
-        IOInsert Into<T>();
-        ODocument Run();
-        T Run<T>() where T : class, new();
+        IOInsert Into<T>();     
         IOInsert Set<T>(string fieldName, T fieldValue);
         IOInsert Set<T>(T obj);
         string ToString();

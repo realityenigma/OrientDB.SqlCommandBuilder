@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+﻿using OrientDB.SqlCommandBuilder.Interfaces;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
 // CREATE EDGE [<class>] 
@@ -11,7 +8,7 @@ using Orient.Client.Protocol.Operations.Command;
 // TO <rid>|(<query>)|[<rid>]* 
 // [SET <field> = <expression>[,]*]
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlCreateEdge : IOCreateEdge
     {
@@ -175,30 +172,7 @@ namespace Orient.Client
         }
 
         #endregion
-
-        #region Run
-
-        public OEdge Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return result.ToSingle().To<OEdge>();
-        }
-
-        public T Run<T>() where T : class, new()
-        {
-            return Run().To<T>();
-        }
-
-        #endregion
-
+        
         public override string ToString()
         {
             return _sqlQuery.ToString(QueryType.CreateEdge);

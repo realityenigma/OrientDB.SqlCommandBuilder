@@ -1,14 +1,12 @@
 ﻿using OrientDB.SqlCommandBuilder.Interfaces;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
-using Orient.Client.Protocol.Operations.Command;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
 // CREATE VERTEX [<class>] 
 // [CLUSTER <cluster>] 
 // [SET <field> = <expression>[,]*]
 
-namespace Orient.Client
+namespace OrientDB.SqlCommandBuilder
 {
     public class OSqlCreateVertex : IOCreateVertex
     {
@@ -95,29 +93,6 @@ namespace Orient.Client
             _sqlQuery.Set(obj);
 
             return this;
-        }
-
-        #endregion
-
-        #region Run
-
-        public OVertex Run()
-        {
-            CommandPayloadCommand payload = new CommandPayloadCommand();
-            payload.Text = ToString();
-
-            Command operation = new Command(_connection.Database);
-            operation.OperationMode = OperationMode.Synchronous;
-            operation.CommandPayload = payload;
-
-            OCommandResult result = new OCommandResult(_connection.ExecuteOperation(operation));
-
-            return result.ToSingle().To<OVertex>();
-        }
-
-        public T Run<T>() where T : class, new()
-        {
-            return Run().To<T>();
         }
 
         #endregion

@@ -1,23 +1,19 @@
-﻿using System;
+﻿using OrientDB.Core.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Orient.Client.Protocol;
-using Orient.Client.Protocol.Operations;
 
 namespace OrientDB.SqlCommandBuilder
 {
     public class OClusterQuery
     {
-        private List<OCluster> _clusterIds = new List<OCluster>();
-        private Connection _connection;
+        private List<Cluster> _clusterIds = new List<Cluster>();      
 
-        internal OClusterQuery(Connection _connection)
+        internal OClusterQuery()
         {
             this._connection = _connection;
         }
 
-        internal void AddClusterId(OCluster cluster)
+        internal void AddClusterId(Cluster cluster)
         {
             if (!_clusterIds.Contains(cluster))
                 _clusterIds.Add(cluster);
