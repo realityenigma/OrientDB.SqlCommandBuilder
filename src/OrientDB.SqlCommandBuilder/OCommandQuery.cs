@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using OrientDB.Core.Exceptions;
+using System.Collections.Generic;
 
 namespace OrientDB.SqlCommandBuilder
 {
@@ -15,7 +16,7 @@ namespace OrientDB.SqlCommandBuilder
         public OCommandQuery Set(string parameter, object value)
         {
             if (!(_payload is CommandPayloadCommand))
-                throw new OException(OExceptionType.Query, "A command not support simple parameters");
+                throw new OrientDBException(OrientDBExceptionType.Query, "A command not support simple parameters");
 
             if (_simpleParams == null)
                 _simpleParams = new Dictionary<string, object>();

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using OrientDB.SqlCommandBuilder.Interfaces;
+using OrientDB.Core.Exceptions;
 
 // syntax: 
 // CREATE VERTEX [<class>] 
@@ -43,7 +44,7 @@ namespace OrientDB.SqlCommandBuilder
 
             if (string.IsNullOrEmpty(_document.OClassName))
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain OClassName value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain OClassName value.");
             }
 
             return this;

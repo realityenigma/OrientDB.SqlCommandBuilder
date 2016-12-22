@@ -1,4 +1,6 @@
-﻿using OrientDB.SqlCommandBuilder.Interfaces;
+﻿using OrientDB.Core;
+using OrientDB.Core.Exceptions;
+using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
@@ -49,7 +51,7 @@ namespace OrientDB.SqlCommandBuilder
             }
             else if (string.IsNullOrEmpty(document.OClassName))
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain OClassName value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain OClassName value.");
             }
 
             _sqlQuery.Edge(className);
@@ -105,7 +107,7 @@ namespace OrientDB.SqlCommandBuilder
 
             if (document.ORID == null)
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain ORID value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain ORID value.");
             }
 
             _sqlQuery.From(document.ORID);
@@ -139,7 +141,7 @@ namespace OrientDB.SqlCommandBuilder
             
             if (document.ORID == null)
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain ORID value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain ORID value.");
             }
 
             _sqlQuery.To(document.ORID);

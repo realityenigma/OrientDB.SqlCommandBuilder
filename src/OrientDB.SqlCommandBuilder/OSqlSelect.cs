@@ -81,7 +81,7 @@ namespace OrientDB.SqlCommandBuilder
         {
             if ((document.ORID == null) && string.IsNullOrEmpty(document.OClassName))
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain ORID or OClassName value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain ORID or OClassName value.");
             }
 
             _sqlQuery.From(document);

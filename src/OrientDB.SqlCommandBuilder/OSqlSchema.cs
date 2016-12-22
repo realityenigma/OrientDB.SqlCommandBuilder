@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using OrientDB.SqlCommandBuilder.Protocol;
-using OrientDB.SqlCommandBuilder.Protocol.Operations;
-using OrientDB.SqlCommandBuilder.Protocol.Operations.Command;
 
 namespace OrientDB.SqlCommandBuilder
 {

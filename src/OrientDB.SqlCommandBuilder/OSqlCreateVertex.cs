@@ -1,4 +1,5 @@
-﻿using OrientDB.SqlCommandBuilder.Interfaces;
+﻿using OrientDB.Core.Exceptions;
+using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
@@ -11,16 +12,10 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlCreateVertex : IOCreateVertex
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlCreateVertex()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlCreateVertex(Connection connection)
-        {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Vertex
@@ -47,7 +42,7 @@ namespace OrientDB.SqlCommandBuilder
 
             if (string.IsNullOrEmpty(document.OClassName))
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain OClassName value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain OClassName value.");
             }
 
             _sqlQuery.Vertex(document.OClassName);

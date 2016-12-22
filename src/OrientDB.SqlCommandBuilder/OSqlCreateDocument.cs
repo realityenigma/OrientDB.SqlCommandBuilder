@@ -11,11 +11,7 @@ namespace OrientDB.SqlCommandBuilder
 
         public OSqlCreateDocument()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlCreateDocument()
-        {
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Document

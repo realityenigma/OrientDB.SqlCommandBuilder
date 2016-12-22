@@ -2,6 +2,7 @@
 using System.Linq;
 using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.Core;
+using OrientDB.Core.Exceptions;
 
 namespace OrientDB.SqlCommandBuilder
 {
@@ -43,7 +44,7 @@ namespace OrientDB.SqlCommandBuilder
 
             if (string.IsNullOrEmpty(_document.OClassName))
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain OClassName value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain OClassName value.");
             }
 
             return this;
@@ -126,7 +127,7 @@ namespace OrientDB.SqlCommandBuilder
 
             if (document.ORID == null)
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain ORID value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain ORID value.");
             }
             return document;
         }

@@ -1,5 +1,6 @@
 ﻿using OrientDB.SqlCommandBuilder.Protocol;
 using OrientDB.Core;
+using OrientDB.Core.Exceptions;
 
 // syntax:
 // DELETE EDGE <rid>|FROM <rid>|TO <rid>|<[<class>] 
@@ -59,7 +60,7 @@ namespace OrientDB.SqlCommandBuilder
 
             if (document.ORID == null)
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain ORID value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain ORID value.");
             }
 
             _sqlQuery.From(document.ORID);
@@ -93,7 +94,7 @@ namespace OrientDB.SqlCommandBuilder
 
             if (document.ORID == null)
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain ORID value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain ORID value.");
             }
 
             _sqlQuery.To(document.ORID);

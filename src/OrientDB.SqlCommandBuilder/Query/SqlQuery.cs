@@ -7,16 +7,17 @@ using System.Text;
 namespace OrientDB.SqlCommandBuilder.Protocol
 {
     using Core;
+    using Core.Exceptions;
     using Core.Models;
     using System.Text.RegularExpressions;
 
     internal class SqlQuery
     {
         private QueryCompiler _compiler = new QueryCompiler();
-     
+
         public SqlQuery()
         {
-          
+
         }
         internal void Class(string className)
         {
@@ -138,7 +139,7 @@ namespace OrientDB.SqlCommandBuilder.Protocol
             }
             else
             {
-                throw new OException(OExceptionType.Query, "Document doesn't contain OClassName value.");
+                throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain OClassName value.");
             }
 
             if (document.ORID != null)
@@ -568,26 +569,11 @@ namespace OrientDB.SqlCommandBuilder.Protocol
             }
             else if (value is DateTime)
             {
-                if (_connection == null)
-                {
-                    //DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                    DateTime fieldValue = (DateTime)((object)value);
-                    //field += ((long)(value - unixEpoch).TotalMilliseconds);
-                    sql = "'" + fieldValue.ToString("s").Replace('T', ' ') + "'";
-                }
-                else
-                {
-                    var propDocument = _connection.Database.DatabaseProperties;
-                    var dateTimeFormat = propDocument.GetField<string>("DateTimeFormat");
-                    var timeZone = propDocument.GetField<string>("Timezone");
-                    dateTimeFormat = Regex.Replace(dateTimeFormat, @"\.SSS", ".fff");
-                    dateTimeFormat = Regex.Replace(dateTimeFormat, @"\.SS", ".ff");
+                //DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                DateTime fieldValue = (DateTime)((object)value);
+                //field += ((long)(value - unixEpoch).TotalMilliseconds);
+                sql = "'" + fieldValue.ToString("s").Replace('T', ' ') + "'";
 
-                    // How to map Windows TimeZone id to IANA timezone id
-
-                    DateTime fieldValue = (DateTime)((object)value);
-                    sql = "'" + fieldValue.ToString(dateTimeFormat) + "'";
-                }
             }
             else if (value is TimeSpan)
             {
