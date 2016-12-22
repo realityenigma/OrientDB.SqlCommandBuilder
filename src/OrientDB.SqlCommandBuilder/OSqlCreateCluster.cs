@@ -1,8 +1,6 @@
 ﻿using OrientDB.Core.Models;
 using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.SqlCommandBuilder.Protocol;
-using OrientDB.SqlCommandBuilder.Protocol.Operations;
-using OrientDB.SqlCommandBuilder.Protocol.Operations.Command;
 
 // syntax:
 // CREATE CLUSTER <name> <type> 
@@ -15,16 +13,10 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlCreateCluster : IOCreateCluster
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlCreateCluster()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlCreateCluster(Connection connection)
-        {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Cluster

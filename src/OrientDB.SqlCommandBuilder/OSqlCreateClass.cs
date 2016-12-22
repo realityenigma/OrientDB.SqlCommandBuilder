@@ -13,18 +13,12 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlCreateClass
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
         private string _className;
         private Type _type;
         private bool _autoProperties;
         public OSqlCreateClass()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlCreateClass(Connection connection)
-        {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Class
@@ -95,70 +89,6 @@ namespace OrientDB.SqlCommandBuilder
             _sqlQuery.Cluster(clusterId.ToString());
 
             return this;
-        }
-
-        public string Run()
-        {
-            OCluster cluster;
-            var defaultClusterId = _connection.Database.GetClusterIdFor(_className);
-
-            if (defaultClusterId == -1)
-            {
-                CommandPayloadCommand payload = new CommandPayloadCommand();
-                payload.Text = ToString();
-
-                Command operation = new Command(_connection.Database);
-                operation.OperationMode = OperationMode.Synchronous;
-                operation.CommandPayload = payload;
-                var doc = _connection.ExecuteOperation(operation);
-                OCommandResult result = new OCommandResult(doc);
-//                var clusterId = short.Parse(result.ToDocument().GetField<string>("Content"));
-
-                cluster = _connection.Database.AddCluster(new OCluster { Name = _className });
-            }
-            else
-            {
-                cluster = _connection.Database.GetClusters().FirstOrDefault(c => c.Name == _className);
-            }
-
-            if (_autoProperties)
-            {
-                CreateAutoProperties();
-            }
-
-            return cluster.Name;
-        }
-
-        private void CreateAutoProperties()
-        {
-            foreach (var pi in _type.GetTypeInfo().GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Instance | BindingFlags.Public))
-            {
-                if (pi.CanRead && pi.CanWrite)
-                {
-                    var oprop = pi.GetOPropertyAttribute();
-                    if (oprop != null && !oprop.Deserializable && !oprop.Serializable)
-                        continue;
-
-                    CreateProperty(pi);
-                }
-            }
-        }
-
-        private void CreateProperty(PropertyInfo pi)
-        {
-            var propType = ConvertPropertyType(pi.PropertyType);
-            var @class =  _className;
-
-            var propid = _connection.Database
-                .Create
-                .Property(pi.Name, propType)
-                .Class(@class)
-                .Run();
-        }
-
-        private OType ConvertPropertyType(Type propertyType)
-        {
-            return TypeConverter.TypeToDbName(propertyType);
         }
 
         public override string ToString()

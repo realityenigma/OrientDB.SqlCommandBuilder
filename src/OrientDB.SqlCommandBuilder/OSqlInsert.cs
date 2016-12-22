@@ -11,17 +11,10 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlInsert : IOInsert
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlInsert()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-
-        internal OSqlInsert(Connection connection)
-        {
-            _connection = connection;
-             _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Insert

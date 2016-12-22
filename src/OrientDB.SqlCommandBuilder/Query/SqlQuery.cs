@@ -13,10 +13,10 @@ namespace OrientDB.SqlCommandBuilder.Protocol
     internal class SqlQuery
     {
         private QueryCompiler _compiler = new QueryCompiler();
-        private Connection _connection;
-        public SqlQuery(Connection connection)
+     
+        public SqlQuery()
         {
-            _connection = connection;
+          
         }
         internal void Class(string className)
         {

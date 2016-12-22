@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using OrientDB.SqlCommandBuilder.Protocol;
-using OrientDB.SqlCommandBuilder.Protocol.Operations;
-using OrientDB.SqlCommandBuilder.Protocol.Operations.Command;
+﻿using OrientDB.SqlCommandBuilder.Protocol;
 using OrientDB.Core;
 
 // syntax:
@@ -14,16 +11,10 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlDeleteEdge
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlDeleteEdge()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlDeleteEdge(Connection connection)
-        {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Delete

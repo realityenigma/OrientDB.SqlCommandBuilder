@@ -17,11 +17,6 @@ namespace OrientDB.SqlCommandBuilder
         {
         }
 
-        internal ORecordCreateVertex()
-        {
-            
-        }
-
         #region Vertex
 
         public IOCreateVertex Vertex(string className)
@@ -59,26 +54,7 @@ namespace OrientDB.SqlCommandBuilder
             return Vertex(typeof(T).Name);
         }
 
-        #endregion
-
-        #region Cluster
-
-        public IOCreateVertex Cluster(string clusterName)
-        {
-            if (_document.ORID == null)
-                _document.ORID = new ORID();
-
-            _document.ORID.ClusterId = _connection.Database.GetClusters().First(x => x.Name == clusterName).Id;
-
-            return this;
-        }
-
-        public IOCreateVertex Cluster<T>()
-        {
-            return Cluster(typeof(T).Name);
-        }
-
-        #endregion
+        #endregion      
 
         #region Set
 

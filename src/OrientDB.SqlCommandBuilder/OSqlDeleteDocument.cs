@@ -1,4 +1,5 @@
-﻿using OrientDB.SqlCommandBuilder.Protocol;
+﻿using OrientDB.Core;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax:
 // DELETE FROM <Class>|cluster:<cluster>|index:<index> 
@@ -11,16 +12,10 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlDeleteDocument
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlDeleteDocument()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlDeleteDocument(Connection connection)
-        {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         public OSqlDeleteDocument Delete<T>(T obj)

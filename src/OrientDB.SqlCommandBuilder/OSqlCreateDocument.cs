@@ -8,15 +8,13 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlCreateDocument : IOCreateDocument
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlCreateDocument()
         {
             _sqlQuery = new SqlQuery(null);
         }
-        internal OSqlCreateDocument(Connection connection)
+        internal OSqlCreateDocument()
         {
-            _connection = connection;
             _sqlQuery = new SqlQuery(connection);
         }
 

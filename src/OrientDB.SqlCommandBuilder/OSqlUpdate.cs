@@ -1,4 +1,5 @@
-﻿using OrientDB.SqlCommandBuilder.Protocol;
+﻿using OrientDB.Core;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
 // UPDATE <class>|cluster:<cluster>> 
@@ -24,11 +25,7 @@ namespace OrientDB.SqlCommandBuilder
 
         public OSqlUpdate()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlUpdate(Connection connection)
-        {
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Update

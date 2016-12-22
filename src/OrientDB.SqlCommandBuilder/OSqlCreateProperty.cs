@@ -5,15 +5,13 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlCreateProperty
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
         private string _propertyName;
         private string _class;
         private OType _type;
 
-        internal OSqlCreateProperty(Connection connection)
+        internal OSqlCreateProperty()
         {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(_connection);
+            _sqlQuery = new SqlQuery();
         }
         public OSqlCreateProperty Property(string propertyName, OType type)
         {

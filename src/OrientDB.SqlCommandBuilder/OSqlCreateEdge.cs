@@ -13,16 +13,10 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlCreateEdge : IOCreateEdge
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlCreateEdge()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlCreateEdge(Connection connection)
-        {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Edge

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using OrientDB.SqlCommandBuilder.Protocol;
 using System.Reflection;
+using OrientDB.Core;
 
 // syntax:
 // SELECT [FROM <Target> 
@@ -19,11 +20,7 @@ namespace OrientDB.SqlCommandBuilder
 
         public OSqlSelect()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlSelect(Connection connection)
-        {
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Select
@@ -41,13 +38,6 @@ namespace OrientDB.SqlCommandBuilder
 
             return this;
         }
-
-        /*public OSqlSelect First()
-        {
-            _sqlQuery.Surround("first");
-
-            return this;
-        }*/
 
         public OSqlSelect Nth(int index)
         {

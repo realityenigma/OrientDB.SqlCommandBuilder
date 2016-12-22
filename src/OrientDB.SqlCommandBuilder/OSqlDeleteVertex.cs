@@ -1,4 +1,5 @@
-﻿using OrientDB.SqlCommandBuilder.Protocol;
+﻿using OrientDB.Core;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax:
 // DELETE VERTEX <rid>|<[<class>] 
@@ -10,16 +11,10 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlDeleteVertex
     {
         private SqlQuery _sqlQuery;
-        private Connection _connection;
 
         public OSqlDeleteVertex()
         {
-            _sqlQuery = new SqlQuery(null);
-        }
-        internal OSqlDeleteVertex(Connection connection)
-        {
-            _connection = connection;
-            _sqlQuery = new SqlQuery(connection);
+            _sqlQuery = new SqlQuery();
         }
 
         #region Delete

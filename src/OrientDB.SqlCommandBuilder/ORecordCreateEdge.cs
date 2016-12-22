@@ -54,26 +54,7 @@ namespace OrientDB.SqlCommandBuilder
             return Edge(typeof(T).Name);
         }
 
-        #endregion
-
-        #region Cluster
-
-        public IOCreateEdge Cluster(string clusterName)
-        {
-            if (_document.ORID == null)
-                _document.ORID = new ORID();
-
-            _document.ORID.ClusterId = _connection.Database.GetClusters().First(x => x.Name == clusterName).Id;
-
-            return this;
-        }
-
-        public IOCreateEdge Cluster<T>()
-        {
-            return Cluster(typeof(T).Name);
-        }
-
-        #endregion
+        #endregion       
 
         #region Set
 
