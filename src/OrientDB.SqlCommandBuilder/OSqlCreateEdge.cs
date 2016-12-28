@@ -1,6 +1,9 @@
 ﻿using OrientDB.Core;
 using OrientDB.Core.Exceptions;
+using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Extensions;
 using OrientDB.SqlCommandBuilder.Interfaces;
+using OrientDB.SqlCommandBuilder.Models;
 using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
@@ -32,15 +35,15 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateEdge Edge<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             string className = document.OClassName;
@@ -94,15 +97,15 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateEdge From<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (document.ORID == null)
@@ -128,17 +131,17 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateEdge To<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
-            
+
             if (document.ORID == null)
             {
                 throw new OrientDBException(OrientDBExceptionType.Query, "Document doesn't contain ORID value.");

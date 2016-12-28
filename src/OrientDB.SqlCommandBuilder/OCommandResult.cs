@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,9 +8,9 @@ namespace OrientDB.SqlCommandBuilder
 {
     public class OCommandResult
     {
-        private ODocument _document;
+        private OrientDBEntity _document;
 
-        internal OCommandResult(ODocument document)
+        internal OCommandResult(OrientDBEntity document)
         {
             _document = document;
         }
@@ -28,14 +30,14 @@ namespace OrientDB.SqlCommandBuilder
             return 0;
         }
 
-        public ODocument ToSingle()
+        public OrientDBEntity ToSingle()
         {
-            ODocument document = null;
+            DictionaryOrientDBEntity document = null;
 
             switch (_document.GetField<PayloadStatus>("PayloadStatus"))
             {
                 case PayloadStatus.SingleRecord:
-                    document = _document.GetField<ODocument>("Content");
+                    document = _document.GetField<IDictionary<string, object>>("Content");
                     break;
                 case PayloadStatus.RecordCollection:
                     document = _document.GetField<List<ODocument>>("Content").FirstOrDefault();
@@ -51,12 +53,12 @@ namespace OrientDB.SqlCommandBuilder
             return document;
         }
 
-        public List<ODocument> ToList()
+        public List<OrientDBEntity> ToList()
         {
-            return _document.GetField<List<ODocument>>("Content");
+            return _document.GetField<List<IDictionary<string, object>>("Content");
         }
 
-        public ODocument ToDocument()
+        public OrientDBEntity ToDocument()
         {
             return _document;
         }

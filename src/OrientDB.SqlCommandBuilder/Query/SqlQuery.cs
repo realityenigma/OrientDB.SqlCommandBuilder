@@ -9,6 +9,8 @@ namespace OrientDB.SqlCommandBuilder.Protocol
     using Core;
     using Core.Exceptions;
     using Core.Models;
+    using Extensions;
+    using Models;
     using System.Text.RegularExpressions;
 
     internal class SqlQuery
@@ -75,15 +77,15 @@ namespace OrientDB.SqlCommandBuilder.Protocol
 
         internal void Insert<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (!string.IsNullOrEmpty(document.OClassName))
@@ -96,15 +98,15 @@ namespace OrientDB.SqlCommandBuilder.Protocol
 
         internal void Update<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (!string.IsNullOrEmpty(document.OClassName))
@@ -122,15 +124,15 @@ namespace OrientDB.SqlCommandBuilder.Protocol
 
         internal void Delete<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (!string.IsNullOrEmpty(document.OClassName))
@@ -153,15 +155,15 @@ namespace OrientDB.SqlCommandBuilder.Protocol
 
         internal void DeleteVertex<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (!string.IsNullOrEmpty(document.OClassName))
@@ -177,15 +179,15 @@ namespace OrientDB.SqlCommandBuilder.Protocol
 
         internal void DeleteEdge<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (!string.IsNullOrEmpty(document.OClassName))
@@ -243,12 +245,12 @@ namespace OrientDB.SqlCommandBuilder.Protocol
             _compiler.Unique(Q.From, ParseClassName(target));
         }
 
-        internal void From(OSqlSelect nestedSelect)
+        internal void From(SqlSelect nestedSelect)
         {
             _compiler.Unique(Q.From, "(", nestedSelect.ToString(), ")");
         }
 
-        internal void From(ODocument document)
+        internal void From(OrientDBEntity document)
         {
             if (!string.IsNullOrEmpty(document.OClassName))
             {
@@ -343,15 +345,15 @@ namespace OrientDB.SqlCommandBuilder.Protocol
 
         internal void Set<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             // TODO: go also through embedded fields
@@ -579,7 +581,7 @@ namespace OrientDB.SqlCommandBuilder.Protocol
             {
                 sql = "'" + value.ToString() + "'";
             }
-            else if (value is ODocument)
+            else if (value is OrientDBEntity)
             {
                 var document = ((ODocument)value);
 

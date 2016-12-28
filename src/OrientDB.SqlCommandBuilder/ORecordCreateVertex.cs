@@ -2,6 +2,9 @@
 using System.Linq;
 using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.Core.Exceptions;
+using OrientDB.SqlCommandBuilder.Models;
+using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Extensions;
 
 // syntax: 
 // CREATE VERTEX [<class>] 
@@ -12,7 +15,7 @@ namespace OrientDB.SqlCommandBuilder
 {
     public class ORecordCreateVertex : IOCreateVertex
     {
-        private ODocument _document;
+        private DictionaryOrientDBEntity _document;
 
         public ORecordCreateVertex()
         {
@@ -23,7 +26,7 @@ namespace OrientDB.SqlCommandBuilder
         public IOCreateVertex Vertex(string className)
         {
             if (_document == null)
-                _document = new ODocument();
+                _document = new DictionaryOrientDBEntity();
 
             _document.OClassName = className;
 
@@ -32,14 +35,13 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateVertex Vertex<T>(T obj)
         {
-
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                _document = obj as ODocument;
+                _document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                _document = ODocument.ToDocument(obj);
+                _document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (string.IsNullOrEmpty(_document.OClassName))
@@ -68,7 +70,7 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateVertex Set<T>(T obj)
         {
-            var document = obj is ODocument ? obj as ODocument : ODocument.ToDocument(obj);
+            var document = obj is OrientDBEntity ? (obj as OrientDBEntity).ToDictionaryOrientDBEntity() : OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
 
             // TODO: go also through embedded fields
             foreach (KeyValuePair<string, object> field in document)

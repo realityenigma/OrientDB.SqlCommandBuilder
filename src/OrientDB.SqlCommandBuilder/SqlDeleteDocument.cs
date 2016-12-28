@@ -1,4 +1,5 @@
 ﻿using OrientDB.Core;
+using OrientDB.Core.Models;
 using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax:
@@ -9,16 +10,16 @@ using OrientDB.SqlCommandBuilder.Protocol;
 
 namespace OrientDB.SqlCommandBuilder
 {
-    public class OSqlDeleteDocument
+    public class SqlDeleteDocument
     {
         private SqlQuery _sqlQuery;
 
-        public OSqlDeleteDocument()
+        public SqlDeleteDocument()
         {
             _sqlQuery = new SqlQuery();
         }
 
-        public OSqlDeleteDocument Delete<T>(T obj)
+        public SqlDeleteDocument Delete<T>(T obj)
         {
             _sqlQuery.Delete(obj);
 
@@ -27,14 +28,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Class
 
-        public OSqlDeleteDocument Class(string className)
+        public SqlDeleteDocument Class(string className)
         {
             _sqlQuery.Class(className);
 
             return this;
         }
 
-        public OSqlDeleteDocument Class<T>()
+        public SqlDeleteDocument Class<T>()
         {
             return Class(typeof(T).Name);
         }
@@ -43,14 +44,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Cluster
 
-        public OSqlDeleteDocument Cluster(string clusterName)
+        public SqlDeleteDocument Cluster(string clusterName)
         {
             _sqlQuery.Cluster("cluster:" + clusterName);
 
             return this;
         }
 
-        public OSqlDeleteDocument Cluster<T>()
+        public SqlDeleteDocument Cluster<T>()
         {
             return Cluster(typeof(T).Name);
         }
@@ -59,14 +60,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Record
 
-        public OSqlDeleteDocument Record(ORID orid)
+        public SqlDeleteDocument Record(ORID orid)
         {
             _sqlQuery.Record(orid);
 
             return this;
         }
 
-        public OSqlDeleteDocument Record(ODocument document)
+        public SqlDeleteDocument Record(OrientDBEntity document)
         {
             return Record(document.ORID);
         }
@@ -75,91 +76,91 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Where with conditions
 
-        public OSqlDeleteDocument Where(string field)
+        public SqlDeleteDocument Where(string field)
         {
             _sqlQuery.Where(field);
 
             return this;
         }
 
-        public OSqlDeleteDocument And(string field)
+        public SqlDeleteDocument And(string field)
         {
             _sqlQuery.And(field);
 
             return this;
         }
 
-        public OSqlDeleteDocument Or(string field)
+        public SqlDeleteDocument Or(string field)
         {
             _sqlQuery.Or(field);
 
             return this;
         }
 
-        public OSqlDeleteDocument Equals<T>(T item)
+        public SqlDeleteDocument Equals<T>(T item)
         {
             _sqlQuery.Equals<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument NotEquals<T>(T item)
+        public SqlDeleteDocument NotEquals<T>(T item)
         {
             _sqlQuery.NotEquals<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument Lesser<T>(T item)
+        public SqlDeleteDocument Lesser<T>(T item)
         {
             _sqlQuery.Lesser<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument LesserEqual<T>(T item)
+        public SqlDeleteDocument LesserEqual<T>(T item)
         {
             _sqlQuery.LesserEqual<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument Greater<T>(T item)
+        public SqlDeleteDocument Greater<T>(T item)
         {
             _sqlQuery.Greater<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument GreaterEqual<T>(T item)
+        public SqlDeleteDocument GreaterEqual<T>(T item)
         {
             _sqlQuery.GreaterEqual<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument Like<T>(T item)
+        public SqlDeleteDocument Like<T>(T item)
         {
             _sqlQuery.Like<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument IsNull()
+        public SqlDeleteDocument IsNull()
         {
             _sqlQuery.IsNull();
 
             return this;
         }
 
-        public OSqlDeleteDocument Contains<T>(T item)
+        public SqlDeleteDocument Contains<T>(T item)
         {
             _sqlQuery.Contains<T>(item);
 
             return this;
         }
 
-        public OSqlDeleteDocument Contains<T>(string field, T value)
+        public SqlDeleteDocument Contains<T>(string field, T value)
         {
             _sqlQuery.Contains<T>(field, value);
 
@@ -168,7 +169,7 @@ namespace OrientDB.SqlCommandBuilder
 
         #endregion
 
-        public OSqlDeleteDocument Limit(int maxRecords)
+        public SqlDeleteDocument Limit(int maxRecords)
         {
             _sqlQuery.Limit(maxRecords);
 

@@ -15,10 +15,7 @@ namespace OrientDB.SqlCommandBuilder
 
         public ORecordCreateEdge()
         {
-        }
 
-        internal ORecordCreateEdge()
-        {
         }
 
         #region Edge
@@ -62,7 +59,7 @@ namespace OrientDB.SqlCommandBuilder
         public IOCreateEdge Set<T>(string fieldName, T fieldValue)
         {
             if (_document == null)
-                _document = new ODocument();
+                _document = new Dictionary<string, object>();
             _document.SetField(fieldName, fieldValue);
 
             return this;
@@ -70,7 +67,7 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateEdge Set<T>(T obj)
         {
-            var document = obj is ODocument ? obj as ODocument : ODocument.ToDocument(obj);
+            var document = obj is IDictionary<string, object> ? obj as IDictionary<string, object> : ODocument.ToDocument(obj);
 
             // TODO: go also through embedded fields
             foreach (KeyValuePair<string, object> field in document)

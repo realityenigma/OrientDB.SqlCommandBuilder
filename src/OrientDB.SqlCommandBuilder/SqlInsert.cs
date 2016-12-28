@@ -8,11 +8,11 @@ using OrientDB.SqlCommandBuilder.Protocol;
 
 namespace OrientDB.SqlCommandBuilder
 {
-    public class OSqlInsert : IOInsert
+    public class SqlInsert : IOInsert
     {
         private SqlQuery _sqlQuery;
 
-        public OSqlInsert()
+        public SqlInsert()
         {
             _sqlQuery = new SqlQuery();
         }

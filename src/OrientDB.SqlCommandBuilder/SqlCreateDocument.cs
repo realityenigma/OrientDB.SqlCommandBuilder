@@ -5,11 +5,11 @@ using OrientDB.SqlCommandBuilder.Protocol;
 
 namespace OrientDB.SqlCommandBuilder
 {
-    public class OSqlCreateDocument : IOCreateDocument
+    public class SqlCreateDocument : IOCreateDocument
     {
         private SqlQuery _sqlQuery;
 
-        public OSqlCreateDocument()
+        public SqlCreateDocument()
         {
             _sqlQuery = new SqlQuery();
         }

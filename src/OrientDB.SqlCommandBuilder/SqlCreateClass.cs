@@ -10,20 +10,20 @@ using OrientDB.SqlCommandBuilder.Protocol;
 
 namespace OrientDB.SqlCommandBuilder
 {
-    public class OSqlCreateClass
+    public class SqlCreateClass
     {
         private SqlQuery _sqlQuery;
         private string _className;
         private Type _type;
         private bool _autoProperties;
-        public OSqlCreateClass()
+        public SqlCreateClass()
         {
             _sqlQuery = new SqlQuery();
         }
 
         #region Class
 
-        public OSqlCreateClass Class(string className)
+        public SqlCreateClass Class(string className)
         {
             _className = className;
             _sqlQuery.Class(_className);
@@ -31,14 +31,14 @@ namespace OrientDB.SqlCommandBuilder
             return this;
         }
 
-        public OSqlCreateClass Class<T>()
+        public SqlCreateClass Class<T>()
         {
             _type = typeof(T);
             _className = typeof(T).Name;
             return Class(_className);
         }
 
-        public OSqlCreateClass Class<T>(string className)
+        public SqlCreateClass Class<T>(string className)
         {
             _type = typeof(T);
             _className = className;
@@ -49,14 +49,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Extends
 
-        public OSqlCreateClass Extends(string superClass)
+        public SqlCreateClass Extends(string superClass)
         {
             _sqlQuery.Extends(superClass);
 
             return this;
         }
 
-        public OSqlCreateClass CreateProperties()
+        public SqlCreateClass CreateProperties()
         {
             if (_type == null)
                 throw new InvalidOperationException("Can only create properties automatically when a generic type parameter has been specified");
@@ -65,7 +65,7 @@ namespace OrientDB.SqlCommandBuilder
             return this;
         }
 
-        public OSqlCreateClass CreateProperties<T>()
+        public SqlCreateClass CreateProperties<T>()
         {
             if (_type != null && _type != typeof(T))
                 throw new InvalidOperationException("Inconsistent type specified - type for CreateProperties<T> must match type for Class<T>");
@@ -77,14 +77,14 @@ namespace OrientDB.SqlCommandBuilder
         }
 
 
-        public OSqlCreateClass Extends<T>()
+        public SqlCreateClass Extends<T>()
         {
             return Extends(typeof(T).Name);
         }
 
         #endregion
 
-        public OSqlCreateClass Cluster(short clusterId)
+        public SqlCreateClass Cluster(short clusterId)
         {
             _sqlQuery.Cluster(clusterId.ToString());
 

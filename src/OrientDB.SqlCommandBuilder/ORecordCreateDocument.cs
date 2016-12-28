@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using OrientDB.SqlCommandBuilder.Interfaces;
+using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Extensions;
+using OrientDB.SqlCommandBuilder.Models;
 
 namespace OrientDB.SqlCommandBuilder
 {
     public class ORecordCreateDocument : IOCreateDocument
     {
-        private IDictionary<string, object> _document;
+        private DictionaryOrientDBEntity _document;
 
         public ORecordCreateDocument()
         {
+            _document = new DictionaryOrientDBEntity();
         }
-
-        internal ORecordCreateDocument()
-        {
-            _document = new Dictionary<string, object>();
-        }
-
+        
         public IOCreateDocument Cluster(string clusterName)
         {
             throw new NotImplementedException();
@@ -40,13 +38,13 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateDocument Document<T>(T obj)
         {
-            if (obj is IDictionary<string, object>)
+            if (obj is OrientDBEntity)
             {
-                _document = obj as IDictionary<string, object>;
+                _document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                _document = IDictionary<string, object>.ToDocument(obj);
+                _document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
             return this;
         }
@@ -60,13 +58,13 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateDocument Set<T>(T obj)
         {
-            if (obj is IDictionary<string, object>)
+            if (obj is OrientDBEntity)
             {
-                _document = obj as IDictionary<string, object>;
+                _document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                _document = IDictionary<string, object>.ToDocument(obj);
+                _document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             return this;

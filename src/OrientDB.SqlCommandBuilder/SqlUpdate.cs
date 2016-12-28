@@ -1,4 +1,5 @@
 ﻿using OrientDB.Core;
+using OrientDB.Core.Models;
 using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
@@ -19,25 +20,25 @@ using OrientDB.SqlCommandBuilder.Protocol;
 
 namespace OrientDB.SqlCommandBuilder
 {
-    public class OSqlUpdate
+    public class SqlUpdate
     {
         private SqlQuery _sqlQuery;
 
-        public OSqlUpdate()
+        public SqlUpdate()
         {
             _sqlQuery = new SqlQuery();
         }
 
         #region Update
 
-        public OSqlUpdate Update(ORID orid)
+        public SqlUpdate Update(ORID orid)
         {
             _sqlQuery.Record(orid);
 
             return this;
         }
 
-        public OSqlUpdate Update<T>(T obj)
+        public SqlUpdate Update<T>(T obj)
         {
             _sqlQuery.Update(obj);
 
@@ -48,14 +49,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Class
 
-        public OSqlUpdate Class(string className)
+        public SqlUpdate Class(string className)
         {
             _sqlQuery.Class(className);
 
             return this;
         }
 
-        public OSqlUpdate Class<T>()
+        public SqlUpdate Class<T>()
         {
             return Class(typeof(T).Name);
         }
@@ -64,14 +65,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Cluster
 
-        public OSqlUpdate Cluster(string clusterName)
+        public SqlUpdate Cluster(string clusterName)
         {
             _sqlQuery.Cluster("cluster:" + clusterName);
 
             return this;
         }
 
-        public OSqlUpdate Cluster<T>()
+        public SqlUpdate Cluster<T>()
         {
             return Cluster(typeof(T).Name);
         }
@@ -80,14 +81,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Record
 
-        public OSqlUpdate Record(ORID orid)
+        public SqlUpdate Record(ORID orid)
         {
             _sqlQuery.Record(orid);
 
             return this;
         }
 
-        public OSqlUpdate Record(ODocument document)
+        public SqlUpdate Record(OrientDBEntity document)
         {
             return Record(document.ORID);
         }
@@ -96,14 +97,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Set
 
-        public OSqlUpdate Set<T>(string fieldName, T fieldValue)
+        public SqlUpdate Set<T>(string fieldName, T fieldValue)
         {
             _sqlQuery.Set<T>(fieldName, fieldValue);
 
             return this;
         }
 
-        public OSqlUpdate Set<T>(T obj)
+        public SqlUpdate Set<T>(T obj)
         {
             _sqlQuery.Set(obj);
 
@@ -112,7 +113,7 @@ namespace OrientDB.SqlCommandBuilder
 
         #endregion
 
-        public OSqlUpdate Add<T>(string fieldName, T fieldValue)
+        public SqlUpdate Add<T>(string fieldName, T fieldValue)
         {
             _sqlQuery.Add(fieldName, fieldValue);
 
@@ -121,14 +122,14 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Remove
 
-        public OSqlUpdate Remove(string fieldName)
+        public SqlUpdate Remove(string fieldName)
         {
             _sqlQuery.Remove(fieldName);
 
             return this;
         }
 
-        public OSqlUpdate Remove<T>(string fieldName, T collectionValue)
+        public SqlUpdate Remove<T>(string fieldName, T collectionValue)
         {
             _sqlQuery.Remove(fieldName, collectionValue);
 
@@ -139,91 +140,91 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Where with conditions
 
-        public OSqlUpdate Where(string field)
+        public SqlUpdate Where(string field)
         {
             _sqlQuery.Where(field);
 
             return this;
         }
 
-        public OSqlUpdate And(string field)
+        public SqlUpdate And(string field)
         {
             _sqlQuery.And(field);
 
             return this;
         }
 
-        public OSqlUpdate Or(string field)
+        public SqlUpdate Or(string field)
         {
             _sqlQuery.Or(field);
 
             return this;
         }
 
-        public OSqlUpdate Equals<T>(T item)
+        public SqlUpdate Equals<T>(T item)
         {
             _sqlQuery.Equals<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate NotEquals<T>(T item)
+        public SqlUpdate NotEquals<T>(T item)
         {
             _sqlQuery.NotEquals<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate Lesser<T>(T item)
+        public SqlUpdate Lesser<T>(T item)
         {
             _sqlQuery.Lesser<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate LesserEqual<T>(T item)
+        public SqlUpdate LesserEqual<T>(T item)
         {
             _sqlQuery.LesserEqual<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate Greater<T>(T item)
+        public SqlUpdate Greater<T>(T item)
         {
             _sqlQuery.Greater<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate GreaterEqual<T>(T item)
+        public SqlUpdate GreaterEqual<T>(T item)
         {
             _sqlQuery.GreaterEqual<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate Like<T>(T item)
+        public SqlUpdate Like<T>(T item)
         {
             _sqlQuery.Like<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate IsNull()
+        public SqlUpdate IsNull()
         {
             _sqlQuery.IsNull();
 
             return this;
         }
 
-        public OSqlUpdate Contains<T>(T item)
+        public SqlUpdate Contains<T>(T item)
         {
             _sqlQuery.Contains<T>(item);
 
             return this;
         }
 
-        public OSqlUpdate Contains<T>(string field, T value)
+        public SqlUpdate Contains<T>(string field, T value)
         {
             _sqlQuery.Contains<T>(field, value);
 
@@ -232,7 +233,7 @@ namespace OrientDB.SqlCommandBuilder
 
         #endregion
 
-        public OSqlUpdate Limit(int maxRecords)
+        public SqlUpdate Limit(int maxRecords)
         {
             _sqlQuery.Limit(maxRecords);
 
@@ -241,7 +242,7 @@ namespace OrientDB.SqlCommandBuilder
 
         #region Upsert
 
-        public OSqlUpdate Upsert()
+        public SqlUpdate Upsert()
         {
             _sqlQuery.Upsert();
 

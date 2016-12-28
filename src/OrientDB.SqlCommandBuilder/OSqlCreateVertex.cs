@@ -1,5 +1,8 @@
 ﻿using OrientDB.Core.Exceptions;
+using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Extensions;
 using OrientDB.SqlCommandBuilder.Interfaces;
+using OrientDB.SqlCommandBuilder.Models;
 using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
@@ -29,15 +32,15 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateVertex Vertex<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = obj as DictionaryOrientDBEntity;
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (string.IsNullOrEmpty(document.OClassName))

@@ -6,9 +6,7 @@ namespace OrientDB.SqlCommandBuilder.Interfaces
     {
         IOCreateEdge Edge(string className);
         IOCreateEdge Edge<T>(T obj);
-        IOCreateEdge Edge<T>();
-        IOCreateEdge Cluster(string clusterName);
-        IOCreateEdge Cluster<T>();
+        IOCreateEdge Edge<T>();       
         IOCreateEdge From(ORID orid);
         IOCreateEdge From<T>(T obj);
         IOCreateEdge To(ORID orid);
