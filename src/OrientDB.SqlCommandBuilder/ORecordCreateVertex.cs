@@ -2,7 +2,7 @@
 using System.Linq;
 using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.Core.Exceptions;
-using OrientDB.SqlCommandBuilder.Models;
+
 using OrientDB.Core.Models;
 using OrientDB.SqlCommandBuilder.Extensions;
 
@@ -73,7 +73,7 @@ namespace OrientDB.SqlCommandBuilder
             var document = obj is OrientDBEntity ? (obj as OrientDBEntity).ToDictionaryOrientDBEntity() : OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
 
             // TODO: go also through embedded fields
-            foreach (KeyValuePair<string, object> field in document)
+            foreach (KeyValuePair<string, object> field in document.Fields)
             {
                 // set only fields which doesn't start with @ character
                 if ((field.Key.Length > 0) && (field.Key[0] != '@'))

@@ -10,9 +10,7 @@ namespace OrientDB.SqlCommandBuilder.Protocol
     using Core.Exceptions;
     using Core.Models;
     using Extensions;
-    using Models;
-    using System.Text.RegularExpressions;
-
+    
     internal class SqlQuery
     {
         private QueryCompiler _compiler = new QueryCompiler();
@@ -26,12 +24,12 @@ namespace OrientDB.SqlCommandBuilder.Protocol
             _compiler.Unique(Q.Class, ParseClassName(className));
         }
 
-        internal void Property(string propertyName, OType type)
+        internal void Property(string propertyName, OrientType type)
         {
             _compiler.Unique(Q.Property, propertyName, type.ToString());
         }
 
-        internal void LinkedType(OType type)
+        internal void LinkedType(OrientType type)
         {
             _compiler.Unique(Q.LinkedType, type.ToString());
         }
@@ -357,7 +355,7 @@ namespace OrientDB.SqlCommandBuilder.Protocol
             }
 
             // TODO: go also through embedded fields
-            foreach (KeyValuePair<string, object> field in document)
+            foreach (KeyValuePair<string, object> field in document.Fields)
             {
                 // set only fields which doesn't start with @ character
                 if ((field.Key.Length > 0) && (field.Key[0] != '@'))
@@ -583,9 +581,9 @@ namespace OrientDB.SqlCommandBuilder.Protocol
             }
             else if (value is OrientDBEntity)
             {
-                var document = ((ODocument)value);
+                var document = ((DictionaryOrientDBEntity)value);
 
-                var properties = document.Where(item => item.Key[0] != '@');
+                var properties = document.Fields.Where(item => item.Key[0] != '@');
                 var propertiesLength = properties.Count();
 
                 sql += "{";
@@ -989,7 +987,7 @@ namespace OrientDB.SqlCommandBuilder.Protocol
 
         private string ParseClassName(string className)
         {
-            if (className.Equals(typeof(OVertex).Name))
+            if (className.Equals(typeof(Vertex).Name))
             {
                 return "V";
             }

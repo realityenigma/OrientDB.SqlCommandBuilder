@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using OrientDB.Core.Models;
+
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OrientDB.SqlCommandBuilder
@@ -6,7 +8,7 @@ namespace OrientDB.SqlCommandBuilder
     public class OSqlSchema
     {
         private string query = "select expand(classes) from metadata:schema";
-        private IEnumerable<ODocument> _schema;
+        private IEnumerable<DictionaryOrientDBEntity> _schema;
 
         internal OSqlSchema()
         {
@@ -18,10 +20,10 @@ namespace OrientDB.SqlCommandBuilder
             return _schema.Select(d => d.GetField<string>("name"));
         }
 
-        public IEnumerable<ODocument> Properties(string @class)
+        public IEnumerable<DictionaryOrientDBEntity> Properties(string @class)
         {
             var pDocument = _schema.FirstOrDefault(d => d.GetField<string>("name") == @class);
-            return pDocument != null ? pDocument.GetField<HashSet<ODocument>>("properties") : null;
+            return pDocument != null ? pDocument.GetField<HashSet<DictionaryOrientDBEntity>>("properties") : null;
         }
 
         public bool IsClassExist(string @class)
@@ -36,7 +38,7 @@ namespace OrientDB.SqlCommandBuilder
             return IsClassExist(@class);
         }
 
-        public IEnumerable<ODocument> Properties<T>()
+        public IEnumerable<DictionaryOrientDBEntity> Properties<T>()
         {
             var @class = typeof(T).Name;
             return Properties(@class);

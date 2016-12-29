@@ -1,5 +1,5 @@
 ﻿using OrientDB.Core.Models;
-using OrientDB.SqlCommandBuilder.Models;
+
 using System.Reflection;
 
 namespace OrientDB.SqlCommandBuilder.Extensions

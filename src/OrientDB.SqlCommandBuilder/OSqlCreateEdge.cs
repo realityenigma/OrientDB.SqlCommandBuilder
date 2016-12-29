@@ -3,7 +3,7 @@ using OrientDB.Core.Exceptions;
 using OrientDB.Core.Models;
 using OrientDB.SqlCommandBuilder.Extensions;
 using OrientDB.SqlCommandBuilder.Interfaces;
-using OrientDB.SqlCommandBuilder.Models;
+
 using OrientDB.SqlCommandBuilder.Protocol;
 
 // syntax: 
@@ -48,7 +48,7 @@ namespace OrientDB.SqlCommandBuilder
 
             string className = document.OClassName;
 
-            if (typeof(T) == typeof(OEdge))
+            if (typeof(T) == typeof(Edge))
             {
                 className = "E";
             }

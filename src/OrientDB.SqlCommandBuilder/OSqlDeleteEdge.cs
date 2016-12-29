@@ -2,6 +2,9 @@
 using OrientDB.Core;
 using OrientDB.Core.Exceptions;
 
+using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Extensions;
+
 // syntax:
 // DELETE EDGE <rid>|FROM <rid>|TO <rid>|<[<class>] 
 // [WHERE <conditions>]> 
@@ -47,15 +50,15 @@ namespace OrientDB.SqlCommandBuilder
 
         public OSqlDeleteEdge From<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (document.ORID == null)
@@ -81,15 +84,15 @@ namespace OrientDB.SqlCommandBuilder
 
         public OSqlDeleteEdge To<T>(T obj)
         {
-            ODocument document;
+            DictionaryOrientDBEntity document;
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                document = obj as ODocument;
+                document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (document.ORID == null)

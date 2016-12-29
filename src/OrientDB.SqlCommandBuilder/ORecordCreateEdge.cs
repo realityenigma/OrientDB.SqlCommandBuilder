@@ -1,14 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.Core;
 using OrientDB.Core.Exceptions;
+
+using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Extensions;
 
 namespace OrientDB.SqlCommandBuilder
 {
     class ORecordCreateEdge : IOCreateEdge
     {
-        private IDictionary<string, object> _document;
+        private DictionaryOrientDBEntity _document;
         private ORID _source;
         private ORID _dest;
         private string _edgeName;
@@ -30,13 +32,13 @@ namespace OrientDB.SqlCommandBuilder
         public IOCreateEdge Edge<T>(T obj)
         {
 
-            if (obj is ODocument)
+            if (obj is OrientDBEntity)
             {
-                _document = obj as ODocument;
+                _document = (obj as OrientDBEntity).ToDictionaryOrientDBEntity();
             }
             else
             {
-                _document = ODocument.ToDocument(obj);
+                _document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (string.IsNullOrEmpty(_document.OClassName))
@@ -59,7 +61,7 @@ namespace OrientDB.SqlCommandBuilder
         public IOCreateEdge Set<T>(string fieldName, T fieldValue)
         {
             if (_document == null)
-                _document = new Dictionary<string, object>();
+                _document = new DictionaryOrientDBEntity();
             _document.SetField(fieldName, fieldValue);
 
             return this;
@@ -67,10 +69,10 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateEdge Set<T>(T obj)
         {
-            var document = obj is IDictionary<string, object> ? obj as IDictionary<string, object> : ODocument.ToDocument(obj);
+            var document = obj is OrientDBEntity ? obj as DictionaryOrientDBEntity : OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
 
             // TODO: go also through embedded fields
-            foreach (KeyValuePair<string, object> field in document)
+            foreach (KeyValuePair<string, object> field in document.Fields)
             {
                 // set only fields which doesn't start with @ character
                 if ((field.Key.Length > 0) && (field.Key[0] != '@'))
@@ -92,7 +94,7 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateEdge From<T>(T obj)
         {
-            _source = ToODocument(obj).ORID;
+            _source = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj).ORID;
             return this;
 
         }
@@ -105,21 +107,21 @@ namespace OrientDB.SqlCommandBuilder
 
         public IOCreateEdge To<T>(T obj)
         {
-            _dest = ToODocument(obj).ORID;
+            _dest = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj).ORID;
             return this;
         }
 
-        private static IDictionary<string, object> ToODocument<T>(T obj)
+        private static OrientDBEntity ToODocument<T>(T obj)
         {
-            IDictionary<string, object> document;
+            DictionaryOrientDBEntity document;
 
             if (obj is IDictionary<string, object>)
             {
-                document = obj as IDictionary<string, object>;
+                document = obj as DictionaryOrientDBEntity;
             }
             else
             {
-                document = ODocument.ToDocument(obj);
+                document = OrientDBEntityExtensions.ToDictionaryOrientDBEntity(obj);
             }
 
             if (document.ORID == null)

@@ -1,4 +1,5 @@
-﻿using OrientDB.SqlCommandBuilder.Protocol;
+﻿using OrientDB.Core.Models;
+using OrientDB.SqlCommandBuilder.Protocol;
 
 namespace OrientDB.SqlCommandBuilder
 {
@@ -7,13 +8,13 @@ namespace OrientDB.SqlCommandBuilder
         private SqlQuery _sqlQuery;
         private string _propertyName;
         private string _class;
-        private OType _type;
+        private OrientType _type;
 
         internal OSqlCreateProperty()
         {
             _sqlQuery = new SqlQuery();
         }
-        public OSqlCreateProperty Property(string propertyName, OType type)
+        public OSqlCreateProperty Property(string propertyName, OrientType type)
         {
             _propertyName = propertyName;
             _type = type;
@@ -33,7 +34,7 @@ namespace OrientDB.SqlCommandBuilder
             return this;
         }
 
-        public OSqlCreateProperty LinkedType(OType type)
+        public OSqlCreateProperty LinkedType(OrientType type)
         {
             _sqlQuery.LinkedType(type);
             return this;

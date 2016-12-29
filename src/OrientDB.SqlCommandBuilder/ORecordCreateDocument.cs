@@ -2,7 +2,7 @@
 using OrientDB.SqlCommandBuilder.Interfaces;
 using OrientDB.Core.Models;
 using OrientDB.SqlCommandBuilder.Extensions;
-using OrientDB.SqlCommandBuilder.Models;
+
 
 namespace OrientDB.SqlCommandBuilder
 {
