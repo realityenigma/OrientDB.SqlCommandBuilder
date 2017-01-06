@@ -1,4 +1,5 @@
 ﻿using OrientDB.Core;
+using OrientDB.Core.Models;
 
 namespace OrientDB.SqlCommandBuilder.Interfaces
 {

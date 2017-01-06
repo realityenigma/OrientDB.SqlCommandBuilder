@@ -1,5 +1,7 @@
 {
-  "version": "1.0.0-*",
+  "title": "OrientDB.Sql.CommandBuilder",
+  "description": "OrientDB SQL Command Builder",
+  "version": "0.0.2-prerelease",
 
   "frameworks": {
     "net451": {
@@ -19,7 +21,7 @@
     "System.Collections.Concurrent": "4.0.12",
     "System.Linq": "4.1.0",
     "System.Reflection": "4.1.0",
-    "OrientDB.Core": "0.0.15-prerelease",
+    "OrientDB.Core": "0.0.16-prerelease",
     "System.Linq.Queryable": "4.0.1"
   }
 }
